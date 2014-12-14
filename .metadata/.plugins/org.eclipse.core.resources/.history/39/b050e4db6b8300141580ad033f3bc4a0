@@ -1,0 +1,22 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+
+public class Main {
+
+	public static void main(String[] args) {
+		try{
+			File fIn = new File(args[0]);
+			try {
+				FileInputStream in = new FileInputStream(fIn);
+			} catch (FileNotFoundException e) {
+				System.out.println("File not found");
+			}
+		} catch (Exception e){
+			System.out.println(e.getMessage());
+		}
+		
+	}
+
+}
