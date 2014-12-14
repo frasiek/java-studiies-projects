@@ -1085,3 +1085,21 @@ java.io.FileNotFoundException: /icons/full/eview16/tasks_tsk.png
 
 !ENTRY org.eclipse.m2e.logback.appender 4 0 2014-12-14 11:48:24.961
 !MESSAGE Exception while loading model for key 'class ByteBuffer [in ByteBuffer.class [in java.nio [in C:\Program Files\Java\jre7\lib\rt.jar]]]'ZIP_Read: error reading zip file
+
+!ENTRY org.eclipse.ui.ide 4 4 2014-12-14 11:55:55.283
+!MESSAGE Problems saving workspace
+
+!ENTRY org.eclipse.ui.ide 2 1 2014-12-14 11:55:55.314
+!MESSAGE Problems occurred while trying to save the state of the workbench.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2014-12-14 11:55:55.314
+!MESSAGE The project description file (.project) for 'Zadanie5' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2014-12-14 11:55:55.314
+!MESSAGE The project description file (.project) for 'Zadanie7' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2014-12-14 11:55:55.314
+!MESSAGE The project description file (.project) for 'watki1' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2014-12-14 11:55:55.314
+!MESSAGE The project description file (.project) for 'zadanie1' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2014-12-14 11:55:55.314
+!MESSAGE The project description file (.project) for 'zadanie6' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2014-12-14 11:55:55.314
+!MESSAGE The project description file (.project) for 'zadanie7locks' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
