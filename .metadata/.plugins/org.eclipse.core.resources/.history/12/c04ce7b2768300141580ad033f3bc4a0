@@ -1,0 +1,29 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+
+public class Converter {
+
+	public static void main(String[] args) {
+		Charset inCharset = Charset.forName("ISO8859-2");
+		Charset outCharset = Charset.forName("UTF-8");
+		
+		try {
+			BufferedReader reader = Files.newBufferedReader(Paths.get(args[0]), inCharset);
+			BufferedWriter writer = Files.newBufferedWriter(Paths.get(args[1]), outCharset);
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+
+	}
+
+}

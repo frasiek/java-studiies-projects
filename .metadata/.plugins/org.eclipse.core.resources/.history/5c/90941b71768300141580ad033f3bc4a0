@@ -1,0 +1,16 @@
+import java.io.File;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+
+
+public class Converter {
+
+	public static void main(String[] args) {
+		Charset inCharset = Charset.forName("ISO8859-2");
+		Charset outCharset = Charset.forName("UTF-8");
+
+		BufferedReader reader = Files.newBufferedReader(new File(args[0]).toPath(), inCharset);
+
+	}
+
+}
