@@ -1,0 +1,11 @@
+/**
+ * Proszê przygotowaæ program kopiuj¹cy dowolny plik. Ka¿dy plik
+ * powinien byæ czytany fragmentami co 16kb. Proszê przetestowaæ
+ * ró¿ne opcje zapisu pliku.
+ * @author Micha³ Fraœ
+ */
+public class Main {
+
+	
+	
+}

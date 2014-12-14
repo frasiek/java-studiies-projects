@@ -1,0 +1,33 @@
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static java.nio.file.StandardOpenOption.*;
+
+/**
+ * Proszê przygotowaæ program kopiuj¹cy dowolny plik. Ka¿dy plik
+ * powinien byæ czytany fragmentami co 16kb. Proszê przetestowaæ
+ * ró¿ne opcje zapisu pliku.
+ * @author Micha³ Fraœ
+ */
+public class Main {
+
+	public static void main(String[] args) {
+		try(BufferedInputStream inStream =  new BufferedInputStream(Files.newInputStream(Paths.get(args[0])));
+			BufferedOutputStream outStream = new BufferedOutputStream(Files.newOutputStream(Paths.get(args[1]), CREATE_NEW)))	{
+			
+			byte[] chunk = new byte[16384];
+			int readen = 0;
+			while((readen = inStream.read(chunk)) != -1){
+				outStream.write(chunk, 0, readen);
+			}
+			
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+}
