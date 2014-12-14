@@ -1,0 +1,13 @@
+package zadanie6;
+
+public class Fork {
+	private boolean busy = false;
+	
+	public synchronized void get(){
+		busy= true;
+	}
+	
+	public synchronized void put(){
+		busy= false;
+	}
+}

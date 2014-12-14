@@ -1,0 +1,11 @@
+package watki1;
+import java.text.DateFormat;
+
+public class MyDate {
+
+	public static void printCurrentDate(){
+		MyDate now = new MyDate();
+		System.out.println(" 1. " + now.toString());
+	}
+	
+}

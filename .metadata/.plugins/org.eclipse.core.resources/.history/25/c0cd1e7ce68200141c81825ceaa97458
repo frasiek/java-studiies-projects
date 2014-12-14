@@ -1,0 +1,42 @@
+
+
+public class Monk extends Thread{
+
+	Fork f1;
+	Fork f2;
+	boolean fb1 = false;
+	boolean fb2 = false;
+	int no;
+	
+	public Monk(int no, Fork f1, Fork f2){
+		this.no = no;
+		this.f1 = f1;
+		this.f2 = f2;
+	}
+	
+	public void run(){
+		while(true){
+			f1.get();
+			fb1 = true;
+			Butler.getInstance().enter(no);
+			f2.get();
+			fb2 = true;
+			eat();
+			f1.put();
+			fb1 = false;
+			f2.put();
+			fb2 = false;
+			Butler.getInstance().leave(no);
+			
+		}
+	}
+	
+	public void printStatus(){
+		System.out.println("Monk "+no+" fork1 "+(fb1)+" fork2 "+(fb2));
+	}
+	
+	private void eat(){
+		System.out.println("Monk "+no+": omm nom nom");
+	}
+	
+}

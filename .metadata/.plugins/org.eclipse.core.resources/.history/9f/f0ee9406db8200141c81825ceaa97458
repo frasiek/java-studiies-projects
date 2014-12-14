@@ -1,0 +1,31 @@
+
+public class Consumer implements Runnable {
+
+	private Warehouse data;
+	private Integer number;
+	public static Object waiter = new Object();
+
+	Consumer(Integer number, Warehouse data) {
+		this.data = data;
+		this.number = number;
+	}
+
+	@Override
+	public void run() {
+		for (;;) {
+			consume();
+		}
+	}
+
+	public void consume() {
+		Integer elements = data.get();
+		Producer.waiter.notify();
+		if(elements <= 0){
+			try {
+				Consumer.waiter.wait();
+			} catch (InterruptedException e) {}
+		}
+		System.out.println("Konsument " + number + " - konsumuje, magazyn zawiera " + elements + " elementow");
+	}
+
+}

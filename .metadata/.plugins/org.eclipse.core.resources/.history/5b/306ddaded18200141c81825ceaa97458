@@ -1,0 +1,14 @@
+package watki1;
+
+public class ThreadRunn extends MessagePrinter implements Runnable{
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		this.printMessage("TR: ThreadRunn created");
+		sleep(3000);
+	}
+
+	
+	
+}

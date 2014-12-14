@@ -1,0 +1,33 @@
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Warehouse {
+	private Integer data = 0;
+	private static ReentrantLock lock = new ReentrantLock();
+	
+	public Integer get() {
+		lock.lock();
+		while(data<=0){
+			try {
+				wait();
+			} catch (InterruptedException e) {}
+		}
+		data--;
+		notifyAll();
+		lock.unlock();
+		return data;
+	}
+
+	public Integer put() {
+		lock.lock();
+		while(data>=5){
+			try {
+				wait();
+			} catch (InterruptedException e) {}
+		}
+		data++;
+		notifyAll();
+		lock.unlock();
+		return data;
+	}
+}

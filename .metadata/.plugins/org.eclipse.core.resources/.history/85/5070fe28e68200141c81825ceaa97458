@@ -1,0 +1,55 @@
+import java.util.concurrent.locks.ReentrantLock;
+
+
+
+public class Monk extends Thread{
+
+	Fork f1;
+	Fork f2;
+	boolean fb1 = false;
+	boolean fb2 = false;
+	int no;
+	private static ReentrantLock lock = new ReentrantLock();
+	
+	public Monk(int no, Fork f1, Fork f2){
+		this.no = no;
+		this.f1 = f1;
+		this.f2 = f2;
+	}
+	
+	public void run(){
+		while(true){
+			if(Butler.getInstance().canIHaveFirstFork()){
+				lock.lock();
+				f1.get();
+				fb1 = true;
+				Butler.getInstance().enter(no);
+				lock.unlock();
+				lock.lock();
+				f2.get();
+				fb2 = true;
+				lock.unlock();
+				eat();
+				f1.put();
+				fb1 = false;
+				f2.put();
+				fb2 = false;
+				Butler.getInstance().leave(no);
+			} else {
+				try {
+					sleep(100);
+					System.out.println("Monk "+no+" waiting...");
+				} catch (InterruptedException e) {}
+			}
+		}
+	}
+	
+	public void printStatus(){
+		System.out.println("Monk "+no+" fork1 "+(fb1)+" fork2 "+(fb2));
+	}
+	
+	private void eat(){
+		System.out.println("Monk "+no+": omm nom nom");
+	}
+	
+}

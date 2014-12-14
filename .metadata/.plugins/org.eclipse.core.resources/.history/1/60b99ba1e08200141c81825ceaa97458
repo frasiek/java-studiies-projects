@@ -1,0 +1,9 @@
+package zadanie6;
+
+public class Monk extends Thread{
+
+	public void run(){
+		
+	}
+	
+}

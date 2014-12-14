@@ -1,0 +1,14 @@
+package watki1;
+
+public class ThreadRunn implements Runnable{
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		System.out.println("jestem ThreadRunn!!");
+		
+	}
+
+	
+	
+}

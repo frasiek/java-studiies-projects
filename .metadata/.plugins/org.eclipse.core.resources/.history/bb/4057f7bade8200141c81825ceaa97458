@@ -1,0 +1,48 @@
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Warehouse {
+	private Integer data = 0;
+	private static ReentrantLock lock = new ReentrantLock();
+	private static ReentrantLock lock2 = new ReentrantLock();
+	private static Condition getCnd;
+	private static Condition putCnd;
+	
+	public Warehouse() {
+		getCnd = lock.newCondition();
+		putCnd = lock.newCondition();
+	}
+	
+	public Integer get() {
+		lock.lock();
+		try{
+			while(data<=0){
+				try {
+					getCnd.await();
+				} catch (InterruptedException e) {}
+			}
+			data--;
+			putCnd.notifyAll();
+			return data;
+		} finally {
+			lock.unlock();
+		}
+	}
+
+	public Integer put() {
+		lock2.lock();
+		try{
+			while(data>=5){
+				try {
+					putCnd.wait();
+				} catch (InterruptedException e) {}
+			}
+			data++;
+			getCnd.notifyAll();
+			return data;
+		} finally {
+			lock2.unlock();
+		}
+	}
+}

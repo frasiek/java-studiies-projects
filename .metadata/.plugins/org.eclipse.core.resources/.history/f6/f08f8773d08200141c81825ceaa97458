@@ -1,0 +1,9 @@
+package watki1;
+
+public class MessagePrinter {
+
+	public void printMessage(String s){
+		System.out.println(s);
+	}
+	
+}

@@ -1,0 +1,15 @@
+package watki1;
+
+public class Counter {
+	 private int counter = 0;
+	 
+	 public int getValue() {
+		 return counter;
+	 }
+	 public void incValue() {
+		 counter++;
+	 }
+	 public void decValue() {
+		 counter--;
+	 }
+}

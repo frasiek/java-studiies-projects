@@ -1,0 +1,43 @@
+import java.util.ArrayList;
+
+
+public class Butler {
+	
+	private static Butler b;
+	private int[] monksWithFork = new int[5];
+	
+	public static Butler getInstance(){
+		if(b == null){
+			b = new Butler();
+		}
+		return b;
+	}
+	
+	public void enter(int i){
+		monksWithFork[i] = 1;
+	}
+	
+	public void leave(int i){
+		monksWithFork[i] = 0;
+	}
+
+	public boolean canIHaveFirstFork(){
+		return monksWithAtLeastOneFork()<4;
+	}
+	
+	private int monksWithAtLeastOneFork(){
+		int sum = 0;
+		for(int i = 0; i<monksWithFork.length; i++){
+			sum += monksWithFork[i];
+		}
+		return sum;
+	}
+	
+	private Butler(){
+		for(int i = 0; i<monksWithFork.length; i++){
+			monksWithFork[i] = 0;
+		}
+	}
+	
+	
+}

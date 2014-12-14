@@ -1,0 +1,21 @@
+package watki1;
+
+public class Glowny {
+
+	public static void main(String[] args) {
+		Thread t1 = new ThreadExt();
+		t1.start();
+		Thread t2 = new Thread(new ThreadRunn());
+		t2.start();
+		Thread t3 = new ThreadExt();
+		t3.start();
+		t1.interrupt();
+		try {
+			t1.join();
+		} catch (InterruptedException e) {}
+		try{
+			t2.join();
+		} catch (InterruptedException e){}
+	}
+
+}

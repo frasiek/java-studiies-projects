@@ -1,0 +1,15 @@
+package watki1;
+
+public class Glowny {
+
+	public static void main(String[] args) {
+		Thread t1 = new ThreadExt();
+		t1.start();
+		Thread t2 = new Thread(new ThreadRunn());
+		t2.start();
+		
+		t1.join();
+		t2.join();
+	}
+
+}

@@ -1,0 +1,14 @@
+package watki1;
+
+public class ThreadRunn2 implements Runnable {
+	static Counter c;
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		c = new Counter();
+	}
+
+	
+	
+}

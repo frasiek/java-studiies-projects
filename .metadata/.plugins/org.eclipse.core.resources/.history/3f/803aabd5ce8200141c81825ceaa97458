@@ -1,0 +1,10 @@
+package watki1;
+
+public class Glowny {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

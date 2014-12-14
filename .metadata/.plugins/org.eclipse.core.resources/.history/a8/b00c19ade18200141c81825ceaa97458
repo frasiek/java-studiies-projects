@@ -1,0 +1,18 @@
+package zadanie6;
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Fork {
+	private boolean busy = false;
+	private static ReentrantLock lock = new ReentrantLock();
+	private static Condition cnd;
+	
+	public synchronized void get(){
+		busy = true;
+	}
+	
+	public synchronized void put(){
+		busy = false;
+	}
+}

@@ -1,0 +1,14 @@
+
+public class Warehouse {
+	private Integer data = 0;
+
+	public synchronized Integer get() {
+		data--;
+		return data;
+	}
+
+	public synchronized Integer put() {
+		data++;
+		return data;
+	}
+}

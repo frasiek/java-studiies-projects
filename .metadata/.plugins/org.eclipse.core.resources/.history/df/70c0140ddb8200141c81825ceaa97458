@@ -1,0 +1,31 @@
+
+public class Producer implements Runnable {
+
+	private Warehouse data;
+	private Integer number;
+	public static Object waiter = new Object();
+
+	Producer(Integer number, Warehouse data) {
+		this.data = data;
+		this.number = number;
+	}
+
+	@Override
+	public void run() {
+		for (;;) {
+			produce();
+		}
+	}
+
+	public void produce() {
+		Integer elements = data.put();
+		Consumer.waiter.notify();
+		if(elements >= 5){
+			try {
+				waiter.wait();
+			} catch (InterruptedException e) {}
+		}
+		System.out.println("Producent " + number + " - produkuje, magazyn zawiera " + elements + " elementow");
+	}
+
+}

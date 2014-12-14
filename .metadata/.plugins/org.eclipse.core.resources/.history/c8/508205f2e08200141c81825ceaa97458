@@ -1,0 +1,17 @@
+package zadanie6;
+
+public class Monk extends Thread{
+
+	Fork f1;
+	Fork f2;
+	
+	public Monk(Fork f1, Fork f2){
+		this.f1 = f1;
+		this.f2 = f2;
+	}
+	
+	public void run(){
+		
+	}
+	
+}

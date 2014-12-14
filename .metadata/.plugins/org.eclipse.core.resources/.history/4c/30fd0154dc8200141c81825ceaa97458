@@ -1,0 +1,26 @@
+
+public class Warehouse {
+	private Integer data = 0;
+	
+	public synchronized Integer get() {
+		while(data<=0){
+			try {
+				wait();
+			} catch (InterruptedException e) {}
+		}
+		data--;
+		notify();
+		return data;
+	}
+
+	public synchronized Integer put() {
+		while(data>5){
+			try {
+				wait();
+			} catch (InterruptedException e) {}
+		}
+		data++;
+		notify();
+		return data;
+	}
+}

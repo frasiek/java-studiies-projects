@@ -1,0 +1,19 @@
+package watki1;
+
+public class Zadanie3 {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ThreadRunn2 t1 = new ThreadRunn2();
+		ThreadRunn2 t2 = new ThreadRunn2();
+		
+		t1.run();
+		t2.run();
+		
+		System.out.println(t1.c.getValue());
+	}
+
+}

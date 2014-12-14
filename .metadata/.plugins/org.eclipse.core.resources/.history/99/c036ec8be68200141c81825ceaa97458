@@ -1,0 +1,24 @@
+
+
+public class Fork {
+	private boolean busy = false;
+	
+	public synchronized boolean get(int i){
+		if(Butler.getInstance().canIHaveFirstFork() == false){
+			return false;
+		}
+		
+		while(busy){
+			try {
+				wait();
+			} catch (InterruptedException e) {}
+		}
+		busy = true;
+		return true;
+	}
+	
+	public synchronized void put(){
+		busy = false;
+		notifyAll();
+	}
+}
