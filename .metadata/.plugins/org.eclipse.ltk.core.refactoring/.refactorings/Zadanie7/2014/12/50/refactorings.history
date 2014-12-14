@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 4 elements to &apos;zadanie7locks/src&apos;&#x0D;&#x0A;- Original project: &apos;Zadanie7&apos;&#x0D;&#x0A;- Destination element: &apos;zadanie7locks/src&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     Main.java&#x0D;&#x0A;     Fork.java&#x0D;&#x0A;     Butler.java&#x0D;&#x0A;     Monk.java" description="Copy compilation units" destination="=zadanie7locks/src" element1="/src&lt;{Main.java" element2="/src&lt;{Fork.java" element3="/src&lt;{Butler.java" element4="/src&lt;{Monk.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1418543059539" units="4" version="1.0"/>
+</session>

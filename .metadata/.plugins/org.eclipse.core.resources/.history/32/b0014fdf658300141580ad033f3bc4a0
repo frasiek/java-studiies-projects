@@ -1,0 +1,30 @@
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Fork {
+	private boolean busy = false;
+	private static ReentrantLock lock = new ReentrantLock();
+	
+	public void get(){
+		lock.lock();
+		try{
+			while(busy){
+				try {
+					wait();
+				} catch (InterruptedException e) {}
+			}
+			busy = true;
+		} finally {
+			lock.unlock();
+		}
+	}
+	
+	public void put(){
+		lock.lock();
+		try{
+			busy = false;
+			notifyAll();
+		} finally {
+			lock.unlock();
+		}	
+	}
+}
