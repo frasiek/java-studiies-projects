@@ -1,0 +1,54 @@
+import static java.nio.file.StandardOpenOption.*;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+/**
+ * Zadanie 7:
+ * – czytanie i zapisywanie pliku binarnego przy u¿yciu kana³ów I/O –
+ * ByteBuffer, SeekableByteChannel
+ * informacje pomocnicze:
+ * - import odpowiednich bibliotek
+ * import java.nio.ByteBuffer;
+ * import java.nio.channels.SeekableByteChannel;
+ * - utworzenie kana³u wejœciowego
+ * SeekableByteChannel sbc = Files.newByteChannel(in)
+ * - utworzenie kana³u wyjœciowego
+ * SeekableByteChannel sbc = Files.newByteChannel(out, CREATE, WRITE);
+ * - inicjacja wielkoœci bufora
+ * ByteBuffer buf = ByteBuffer.allocate(8192);
+ * - ustawienie wskaŸnika w buforze na pocz¹tek oraz ustalenie iloœci
+ * danych na aktualn¹ pozycjê wskaŸnika i pozwala czytaæ z bufora
+ * buf.flip();
+ * - przesuniêcie wskaŸnika w buforze na pocz¹tek
+ * buf.rewind();
+ * czynnoœci do wykonania:
+ * 1) Proszê przepisaæ zadanie 5 z u¿yciem powy¿szych funkcji.
+ * 2) Proszê przeanalizowaæ mo¿liwe opcje funkcji newByteChannel.
+ * @author Micha³ Fraœ
+ */
+public class Main {
+
+	public static void main(String[] args) {
+		try(
+			SeekableByteChannel bcIn = Files.newByteChannel(Paths.get(args[0]));
+			SeekableByteChannel bcOut = Files.newByteChannel(Paths.get(args[1]), TRUNCATE_EXISTING, CREATE_NEW , WRITE);
+		)	{
+			
+			ByteBuffer chunk = ByteBuffer.allocate(16384);
+			while(bcIn.read(chunk) != -1){
+				chunk.flip();
+				bcOut.write(chunk);
+			}
+		} catch(ArrayIndexOutOfBoundsException e){
+			System.out.println("Podaj 2 paramerty: plik_in plik_out");
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+}
