@@ -1,0 +1,198 @@
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.MalformedURLException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
+import java.text.*;
+import java.nio.file.*;
+import java.nio.charset.Charset;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * Klasa pobierajaca dane komenda GET
+ */
+class URLGetThread implements Runnable {
+	private String urlIn;
+	private String dstDir;
+	private Lock lock;
+
+	public URLGetThread(String urlIn, String dstDir, Lock lock) {
+		this.urlIn = urlIn;
+		this.dstDir = dstDir;
+		this.lock = lock;
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			try {
+				download();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * Funkcja do pobierania danych z zadanego adresu URL
+	 */
+	public void download() throws Exception {
+		this.lock.lock();
+		URI uri;
+		URL url;
+		try {
+			uri = new URL("fasfas").toURI();
+			url = uri.toURL();
+			try(
+					InputStream istream = url.openStream();
+					BufferedReader reader = new BufferedReader(new InputStreamReader(istream, "utf8"));	
+				){
+				char[] chunk = new char[16384];
+				int readen = 0;
+				while((readen = reader.read(chunk)) != -1){
+					System.out.println(chunk);
+				}
+				
+			} catch (Exception ex){
+				ex.printStackTrace();
+			}
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.lock.unlock();
+	}
+	
+	protected URL getURL(String urlStr) {
+		URL url;
+		URI uri = null;
+		try {
+			url = new URL(URLDecoder.decode(urlStr, "utf8"));
+			uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(),
+			url.getPort(), url.getPath(), url.getQuery(), url.getRef());
+		} catch (MalformedURLException | UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			return uri.toURL();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}
+
+/**
+ * Klasa wysylajaca dane komenda POST
+ */
+class URLPostThread implements Runnable {
+	private String urlOut;
+	private String srcDir;
+	private Lock lock;
+	private static int counter = 0;
+	private int id = counter++;
+
+	public URLPostThread(String urlOut, String srcDir, Lock lock) {
+		this.urlOut = urlOut;
+		this.srcDir = srcDir;
+		this.lock = lock;
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			String data = null;
+			try {
+				data = getFile();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			try {
+				sendMessage(data);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * Pobiera liste plikow z katalogu
+	 * przykladowe uzycie: listFiles("c:\\temp\\jps\\lab6", "Files-");
+	 */
+	private List<String> listFiles(String dirName, String prefix) {
+		List<String> fileNames = new ArrayList<>();
+		try (
+			DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(dirName))
+		) {
+			for (Path path : directoryStream) {
+				if (path.toString().contains(prefix)) {
+					fileNames.add(path.toString());
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return fileNames;
+	}
+
+	/**
+	 * Pobiera plik z dysku i zwraca jego nazwa i wielkoœæ w formacie
+	 * nazwa, wielkoœæ
+	 */
+	private String getFile() throws Exception {
+		// TODO
+		return null;
+	}
+
+	/**
+	 * Funkcja do wysylania wiadomosci POST
+ 	 * data - obiekt typu string zawierajacy tresc do wysylki
+ 	 */
+	private void sendMessage(String data) throws Exception {
+		if (data == null) {
+			return;
+		}
+
+		// TODO
+	}
+}
+
+public class MainThread {
+	public static void main(String [] args) throws Exception {
+		if (args.length < 4) {
+			System.out.println("Usage: MainThread urlIn urlOut dstDir numOfThreads");
+			System.out.println("Example: http://127.0.0.1:8080/in http://127.0.0.1:8080/out c:\\Temp\\jps\\lab6 4");
+			System.exit(0);
+		}
+
+		Lock getDirLock = new ReentrantLock();
+		Lock postDirLock = new ReentrantLock();
+
+		for (int i = 0; i<Integer.parseInt(args[3]); i++) {
+			new Thread(new URLGetThread(args[0], args[2], getDirLock)).start();
+	 		new Thread(new URLPostThread(args[1], args[2], postDirLock)).start();
+		}
+	}
+}
