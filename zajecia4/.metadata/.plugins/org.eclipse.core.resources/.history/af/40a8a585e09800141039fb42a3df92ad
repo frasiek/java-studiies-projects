@@ -167,10 +167,9 @@ class URLPostThread implements Runnable {
 		}
 		
 		Path file = Paths.get(this.srcDir+"/"+files.get(0));
-		long size = Files.size(file);
-		Files.delete(file);
 		
-		return files.get(0)+", "+size;
+		
+		return files.get(0)+", "+Files.size(file);
 	}
 
 	/**

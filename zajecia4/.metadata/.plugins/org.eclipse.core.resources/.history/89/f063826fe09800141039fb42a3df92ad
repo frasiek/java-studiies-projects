@@ -18,7 +18,6 @@ import java.nio.file.*;
 import java.nio.charset.Charset;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 /**
@@ -166,11 +165,10 @@ class URLPostThread implements Runnable {
 			return null;
 		}
 		
-		Path file = Paths.get(this.srcDir+"/"+files.get(0));
-		long size = Files.size(file);
-		Files.delete(file);
+		String file = this.srcDir+"/"+files.get(0);
 		
-		return files.get(0)+", "+size;
+		
+		return null;
 	}
 
 	/**
