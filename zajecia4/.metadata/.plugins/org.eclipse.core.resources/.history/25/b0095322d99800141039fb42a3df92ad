@@ -14,6 +14,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static java.nio.file.StandardOpenOption.*;
 
 public class Main {
 
@@ -26,7 +30,7 @@ public class Main {
 			uri = new URI("http", "postcatcher.in","/catchers/54b136922310af0200001323", null);
 			url = uri.toURL();
 			cnn = url.openConnection();
-			cnn.setDoInput(true);
+//			cnn.setDoInput(true);
 			cnn.setDoOutput(true);
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
@@ -40,29 +44,23 @@ public class Main {
 		}
 		try(
 				OutputStream dataStream = cnn.getOutputStream();
+//				InputStream response = cnn.getInputStream();
+//				BufferedReader reader = new BufferedReader(new InputStreamReader(response, "utf8"));	
 				BufferedWriter data = new BufferedWriter(new OutputStreamWriter(dataStream));
 				){
 			data.write(URLEncoder.encode("test=123","utf8"));
+			data.close();
+			cnn.connect();
+			char[] chunk = new char[16384];
+			int readen = 0;
+//			while((readen = reader.read(chunk)) != -1){
+//				System.out.print(chunk);
+//			}
 
 		} catch (Exception ex){
 			ex.printStackTrace();
 		}
 
-	
-		try(
-				InputStream response = cnn.getInputStream();
-				BufferedReader reader = new BufferedReader(new InputStreamReader(response, "utf8"));	
-		){
-			char[] chunk = new char[16384];
-			int readen = 0;
-			while((readen = reader.read(chunk)) != -1){
-				System.out.print(chunk);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 	}
 
 }
