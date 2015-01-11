@@ -1,0 +1,119 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.Console;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+
+public class Worker extends Thread {
+
+	Socket s = null;
+	BufferedReader in = null;
+	BufferedWriter out = null;
+
+	String[] params;
+
+	public Worker(String[] params){
+		this.params = params;
+	}
+
+	public void run(){
+		switch(this.params.length){
+		case 2:
+			connect(this.params[0], Integer.parseInt(this.params[1]));
+			break;
+		case 1:
+			connect(this.params[0]);
+			break;
+		default:
+			idle();
+		}
+	}
+
+	protected void idle(){
+		Console console = System.console();
+		String cmd = console.readLine("MY_TELNET>");
+		if(cmd.toUpperCase().startsWith("OPEN")){
+			String[] params = cmd.split(" ");
+			if(params.length == 3){
+				connect(params[1], Integer.parseInt(params[2]));
+				return;
+			} 
+			if(params.length == 2){
+				connect(params[1]);
+				return;
+			} 
+		}
+		if(cmd.toUpperCase().startsWith("CLOSE")){
+			if(this.s != null && this.s.isConnected()){
+				try {
+					this.s.close();
+					return;
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		if(cmd.equals("") && this.s != null && this.s.isConnected()){
+			connectedIdle();
+			return;
+		}
+		idle();
+	}
+
+	protected void connect(String host, int port ){
+		realConnect(host, port );
+	}
+
+	protected void connect(String host ){
+		realConnect(host, 23 );
+	}
+
+	protected void realConnect(String host, int port ){
+		try{
+			this.s = new Socket(host, port);
+			this.s.setSoTimeout(5000);
+			this.in = new BufferedReader(new InputStreamReader(this.s.getInputStream(), "utf-8"));
+			this.out = new BufferedWriter(new OutputStreamWriter(this.s.getOutputStream()));
+
+			if(this.in.ready()){
+				System.out.println(in.readLine());
+			}
+
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		connectedIdle();
+	}
+
+	protected void connectedIdle(){
+		Console console = System.console();
+		while(true){
+			String cmd = console.readLine("");
+			if(cmd.equals("~")){
+				break;
+			}
+			
+			try {
+				this.out.write(cmd+"\r\n");
+				this.out.flush();
+				String line = in.readLine();
+				System.out.println(line);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		idle();
+	}
+
+}

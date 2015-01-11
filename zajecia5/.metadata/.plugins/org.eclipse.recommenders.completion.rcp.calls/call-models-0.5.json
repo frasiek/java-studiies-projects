@@ -1,0 +1,13 @@
+{
+  "D:\\mf\\java\\zajecia5\\zad4\\src": {
+    "location": "D:\\mf\\java\\zajecia5\\zad4\\src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027D:\\mf\\java\\zajecia5\\zad4\\src\u0027. Skipped."
+  },
+  "C:\\Program Files\\Java\\jdk1.7.0_25\\jre\\lib\\rt.jar": {
+    "coordinate": "jre:jre:zip:call:1.0.0",
+    "location": "C:\\Program Files\\Java\\jdk1.7.0_25\\jre\\lib\\rt.jar",
+    "status": "RESOLVED",
+    "error": "No class path info available for \u0027C:\\Program Files\\Java\\jdk1.7.0_25\\jre\\lib\\rt.jar\u0027. Skipped."
+  }
+}
