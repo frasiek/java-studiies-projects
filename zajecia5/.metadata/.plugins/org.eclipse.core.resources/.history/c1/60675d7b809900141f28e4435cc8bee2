@@ -1,0 +1,50 @@
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+
+public class Worker extends Thread {
+
+	Socket s = null;
+	String[] params;
+
+	public Worker(String[] params){
+		this.params = params;
+	}
+
+	public void run(){
+		switch(this.params.length){
+		case 2:
+			connect(this.params[0], Integer.parseInt(this.params[1]));
+			break;
+		case 1:
+			connect(this.params[0]);
+			break;
+		default:
+			idle();
+		}
+	}
+
+	protected void idle(){
+
+	}
+
+	protected void connect(String host, int port ){
+		realConnect(host, port );
+	}
+
+	protected void connect(String host ){
+		realConnect(host, 23 );
+	}
+	
+	protected void realConnect(String host, int port ){
+		try {
+			this.s = new Socket(host, port);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+}

@@ -77,3 +77,6 @@ org.apache.lucene.index.IndexNotFoundException: no segments* file found in org.a
 2015-01-11 10:34:29,907 [pool-10-thread-1] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
 2015-01-11 10:34:30,672 [pool-12-thread-1] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
 2015-01-11 10:34:31,483 [pool-14-thread-1] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-01-11 11:44:42,236 [Worker-8] WARN  o.e.r.i.rcp.repo.ModelRepository - 'remote-models (http://download.eclipse.org/recommenders/models/kepler/, releases+snapshots)' did not send ETAG header for 'jre:jre:zip:ovrm:1.0.0'.
+2015-01-11 11:44:42,298 [pool-16-thread-1] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-01-11 11:44:42,314 [Worker-8] WARN  o.e.r.i.rcp.repo.ModelRepository - 'remote-models (http://download.eclipse.org/recommenders/models/kepler/, releases+snapshots)' did not send ETAG header for 'jre:jre:zip:ovrm:1.0.0'.

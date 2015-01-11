@@ -1,0 +1,64 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+
+public class Worker extends Thread {
+
+	Socket s = null;
+	String[] params;
+
+	public Worker(String[] params){
+		this.params = params;
+	}
+
+	public void run(){
+		switch(this.params.length){
+		case 2:
+			connect(this.params[0], Integer.parseInt(this.params[1]));
+			break;
+		case 1:
+			connect(this.params[0]);
+			break;
+		default:
+			idle();
+		}
+	}
+
+	protected void idle(){
+
+	}
+
+	protected void connect(String host, int port ){
+		realConnect(host, port );
+	}
+
+	protected void connect(String host ){
+		realConnect(host, 23 );
+	}
+
+	protected void realConnect(String host, int port ){
+		try(
+				Socket smtp = new Socket("ux.up.krakow.pl", 25);
+				){
+			this.s = smtp;
+			this.s.setSoTimeout(2000);
+			BufferedReader in = new BufferedReader(new InputStreamReader(this.s.getInputStream(), "utf-8"));
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(this.s.getOutputStream()));
+
+
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+}

@@ -1,0 +1,38 @@
+import java.net.Socket;
+
+
+public class Worker extends Thread {
+
+	Socket s = null;
+	String[] params;
+
+	public Worker(String[] params){
+		this.params = params;
+	}
+
+	public void run(){
+		switch(this.params.length){
+		case 2:
+			connect(this.params[0], Integer.parseInt(this.params[1]));
+			break;
+		case 1:
+			connect(this.params[0]);
+			break;
+		default:
+			idle();
+		}
+	}
+
+	protected void idle(){
+
+	}
+
+	protected void connect(String host, int port ){
+
+	}
+
+	protected void connect(String host ){
+
+	}
+
+}

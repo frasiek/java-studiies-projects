@@ -23,3 +23,9 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.m2e.logback.appender 4 0 2015-01-11 10:34:18.235
 !MESSAGE Failed to open search index.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-01-11 11:44:42.236
+!MESSAGE 'remote-models (http://download.eclipse.org/recommenders/models/kepler/, releases+snapshots)' did not send ETAG header for 'jre:jre:zip:ovrm:1.0.0'.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2015-01-11 11:44:42.314
+!MESSAGE 'remote-models (http://download.eclipse.org/recommenders/models/kepler/, releases+snapshots)' did not send ETAG header for 'jre:jre:zip:ovrm:1.0.0'.

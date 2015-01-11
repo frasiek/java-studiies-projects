@@ -1,0 +1,9 @@
+
+public class Telnet {
+	
+	public static void main(String[] args) {
+		Worker w = new Worker();
+		w.start();
+	}
+
+}
