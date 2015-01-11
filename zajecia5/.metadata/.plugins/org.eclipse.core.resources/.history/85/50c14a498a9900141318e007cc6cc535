@@ -7,11 +7,6 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-/**
- * NONBLOCKING IO http://tutorials.jenkov.com/java-nio/socketchannel.html 
- * @author guest
- *
- */
 
 public class Worker extends Thread {
 

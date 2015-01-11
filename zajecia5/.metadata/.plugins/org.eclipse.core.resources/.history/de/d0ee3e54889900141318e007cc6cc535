@@ -7,11 +7,6 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-/**
- * NONBLOCKING IO http://tutorials.jenkov.com/java-nio/socketchannel.html 
- * @author guest
- *
- */
 
 public class Worker extends Thread {
 
@@ -81,10 +76,10 @@ public class Worker extends Thread {
 	protected void realConnect(String host, int port ){
 		try{
 			this.s = new Socket(host, port);
-			this.s.setSoTimeout(2000);
+			this.s.setSoTimeout(5000);
 			this.in = new BufferedReader(new InputStreamReader(this.s.getInputStream(), "utf-8"));
 			this.out = new BufferedWriter(new OutputStreamWriter(this.s.getOutputStream()));
-			sleep(1000);
+			sleep(500);
 			String line;
 			while(this.in.ready() && (line = in.readLine())!= null){
 				System.out.println(line);
@@ -115,7 +110,6 @@ public class Worker extends Thread {
 			try {
 				this.out.write(cmd+"\r\n");
 				this.out.flush();
-				sleep(1000);
 				String line;
 				while(this.in.ready() && (line = in.readLine())!= null){
 					System.out.println(line);
@@ -124,9 +118,6 @@ public class Worker extends Thread {
 					break;
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
