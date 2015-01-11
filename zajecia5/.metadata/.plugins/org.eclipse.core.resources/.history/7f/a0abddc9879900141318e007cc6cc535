@@ -80,11 +80,12 @@ public class Worker extends Thread {
 			this.in = new BufferedReader(new InputStreamReader(this.s.getInputStream(), "utf-8"));
 			this.out = new BufferedWriter(new OutputStreamWriter(this.s.getOutputStream()));
 			sleep(500);
-			String line;
-			while(this.in.ready() && (line = in.readLine())!= null){
-				System.out.println(line);
+			if(this.in.ready()){
+				String line;
+				while((line = in.readLine())!= null){
+					System.out.println(line);
+				}
 			}
-
 
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
@@ -106,13 +107,15 @@ public class Worker extends Thread {
 			if(cmd.equals("~")){
 				break;
 			}
-
+			
 			try {
 				this.out.write(cmd+"\r\n");
 				this.out.flush();
-				String line;
-				while(this.in.ready() && (line = in.readLine())!= null){
-					System.out.println(line);
+				if(this.in.ready()){
+					String line;
+					while((line = in.readLine())!= null){
+						System.out.println(line);
+					}
 				}
 				if(!this.s.isConnected()){
 					break;
@@ -121,7 +124,7 @@ public class Worker extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
 		}
 		idle();
 	}
