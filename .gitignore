@@ -10,3 +10,5 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/zajecia6/zad1/z6a1/nbproject/private/
+/zajecia6/zad1/z6a1/build/
