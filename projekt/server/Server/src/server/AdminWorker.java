@@ -55,7 +55,7 @@ public class AdminWorker extends Thread {
                 w.flush();
             }
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            System.out.println(ex.toString());
         } finally {
             System.out.print("Admin connection closed\r\n");
             try {
@@ -109,18 +109,33 @@ public class AdminWorker extends Thread {
 
             String line;
             while ((line = r.readLine()) != null) {
-                if(line.toLowerCase().trim().equals("quit")){
+                if (line.toLowerCase().trim().equals("quit")) {
                     w.write("Client mode stopped.\r\n");
                     w.flush();
                     break;
                 }
-                w.write(this.clients.passCommand(line, this.selectedClient));
+                String response = this.clients.passCommand(line, this.selectedClient);
+                w.write(response);
                 w.write("\r\n");
                 w.flush();
             }
-            
+
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
+            try {
+                w.write("Client error: " + ex.getMessage());
+            } catch (IOException ex1) {
+                System.out.println(ex.getMessage());
+            }
+        } catch (NullPointerException ex) {
+            try {
+                w.write("Client connection error.\r\n");
+                w.write("Client mode stopped.");
+                w.write("\r\n");
+                w.flush();
+            } catch (IOException ex1) {
+                Logger.getLogger(AdminWorker.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
 
