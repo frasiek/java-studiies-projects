@@ -3,17 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package z7a2;
+package z7a2_pop;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
  * @author frasiek
  */
-public class Z7a2 {
+public class Z7a2_pop {
 
      /* dane dostepowe do bazy danych */
     private final static String host = "localhost";
@@ -29,6 +31,12 @@ public class Z7a2 {
 
         try {
             connection = DriverManager.getConnection(url, user, pass);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM jps_employees");
+            while(resultSet.next()){
+                System.err.println(resultSet.getString("last_name")+" => "+resultSet.getLong("emp_no"));
+            }
+            resultSet.close();
             if (connection.isValid(2)) {
                 System.out.println("Połączenie zakończone sukcesem");
             }
