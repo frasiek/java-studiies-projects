@@ -5,13 +5,19 @@
  */
 package server;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,6 +39,7 @@ public class AdminWorker extends Thread {
         System.out.println("Admin connected.");
     }
 
+    @Override
     public void run() {
         try (
                 BufferedReader r = new BufferedReader(new InputStreamReader(this.soc.getInputStream(), "utf-8"));
@@ -115,6 +122,7 @@ public class AdminWorker extends Thread {
                     break;
                 }
                 String response = this.clients.passCommand(line, this.selectedClient);
+                response = this.trySavingFile(response);
                 w.write(response);
                 w.write("\r\n");
                 w.flush();
@@ -129,6 +137,8 @@ public class AdminWorker extends Thread {
             }
         } catch (NullPointerException ex) {
             try {
+                System.out.print(ex.toString());
+                ex.printStackTrace();
                 w.write("Client connection error.\r\n");
                 w.write("Client mode stopped.");
                 w.write("\r\n");
@@ -137,6 +147,38 @@ public class AdminWorker extends Thread {
                 Logger.getLogger(AdminWorker.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }
+    }
+
+    private String trySavingFile(String response) {
+        if (response.contains("--begin file content--")) {
+            try {
+                String fileContent = response.substring(response.indexOf("--begin file content--\r\n") + 24, response.indexOf("\r\n--end file content--"));
+                response = response.replace("--begin file content--\r\n" + fileContent + "\r\n--end file content--", "");
+                byte[] decoded = Base64.decode(fileContent);
+                Date d = new Date();
+
+                File theDir = new File("downloads");
+
+                // if the directory does not exist, create it
+                if (!theDir.exists()) {
+                    try {
+                        theDir.mkdir();
+                    } catch (SecurityException se) {
+                    }
+                }
+
+                String filename = System.getProperty("user.dir")+"/downloads/" + System.currentTimeMillis();
+                Path out = Paths.get(filename);
+
+                Files.write(out, decoded);
+                response += "\r\nFile downloaded: " + filename;
+                System.out.println("File downloaded: " + filename);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+        }
+        return response;
     }
 
 }
