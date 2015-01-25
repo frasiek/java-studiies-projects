@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package z7a1;
+package z7a2;
 
-import java.sql.DriverManager;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
  *
  * @author frasiek
  */
-public class Z7a1 {
+public class Z7a2 {
 
-    /* dane dostepowe do bazy danych */
+     /* dane dostepowe do bazy danych */
     private final static String host = "localhost";
     private final static Integer port = 3306;
     private final static String user = "root";
@@ -38,5 +38,5 @@ public class Z7a1 {
             }
         }
     }
-
+    
 }
