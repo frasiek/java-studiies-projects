@@ -32,8 +32,17 @@ public class ClientsWorker extends Thread {
         try {
             r = new BufferedReader(new InputStreamReader(this.soc.getInputStream(), "utf-8"));
             w = new BufferedWriter(new OutputStreamWriter(this.soc.getOutputStream()));
+            System.out.println("Client connected");
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public void close(){
+        try {
+            this.soc.close();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -41,13 +50,14 @@ public class ClientsWorker extends Thread {
         String response = "";
         try {
             w.write(command+"\r\n");
+            w.flush();
             String line;
-            while ((line = r.readLine()) != "--end--") {
+            while (!(line = r.readLine()).toLowerCase().trim().equals("--end--")) {
                 response += line;
             }
             return response;
         } catch (IOException ex) {
-            Logger.getLogger(ClientsWorker.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
         return null;
     }

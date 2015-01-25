@@ -30,7 +30,7 @@ public class Clients extends Thread {
                 sw.start();
             }
         } catch (IOException ex) {
-            Logger.getLogger(Clients.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -40,6 +40,22 @@ public class Clients extends Thread {
         }
         String l = "";
         for (Integer i = 0; i < Clients.clients.size(); i++) {
+            //pingowanie czy wszysscy odpowiadaja
+            try {
+                String response = this.passCommand("ping", i);
+                if (!response.equals("pong")) {
+                    Clients.clients.get(i).close();
+                    Clients.clients.remove((int) i);
+                    i--;
+                    return getClientIds();
+                }
+            } catch (Exception ex) {
+                Clients.clients.get(i).close();
+                Clients.clients.remove((int) i);
+                i--;
+                return getClientIds();
+            }
+
             l += i.toString() + ", ";
         }
         return l.substring(0, l.length() - 2);
@@ -55,10 +71,10 @@ public class Clients extends Thread {
 
         return l;
     }
-    
-    public String passCommand(String command, Integer clientId){
+
+    public String passCommand(String command, Integer clientId) {
         ClientsWorker client = Clients.clients.get(clientId);
-        
+
         return client.command(command);
     }
 
