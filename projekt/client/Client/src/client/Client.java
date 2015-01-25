@@ -10,7 +10,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -21,7 +20,7 @@ import java.util.logging.Logger;
  * @author frasiek
  */
 public class Client {
-    
+
     private Socket socket = null;
     private BufferedReader reader;
     private BufferedWriter writer;
@@ -29,19 +28,58 @@ public class Client {
     private final static String hostLocal = "localhost";
     private final static Integer port = 8080;
     private final static Integer portLocal = 8082;
-    
-    
-    public Client(){
+
+    public Client() {
         try {
             InetAddress addr = InetAddress.getByName(Client.host);
             InetAddress addrLocal = InetAddress.getByName(Client.hostLocal);
-            
+
             this.socket = new Socket(addr, Client.port, addrLocal, Client.portLocal);
             this.reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), "utf-8"));
             this.writer = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+            String line;
+            while((line = this.reader.readLine())!= null){
+                switch(line){
+                    case "ping":
+                        this.ping();
+                        continue;
+                }
+                
+                this.write("Unknown command '"+line+"'");
+            }
+            
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        } finally{
+            try {
+                this.socket.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    protected void ping(){
+        this.write("pong");
+    }
+    
+    private void write(String message){
+        System.out.println("Ping received\r\n");
+        try {
+            this.writer.write(message+"\r\n");
+            this.writer.write("--end--\r\n");
+            this.writer.flush();
+            System.out.println("Pong sent\r\n");
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Client client = new Client();
+    }
+
 }

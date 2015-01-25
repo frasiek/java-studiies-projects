@@ -53,6 +53,7 @@ public class ClientsWorker extends Thread {
             w.flush();
             String line;
             while (!(line = r.readLine()).toLowerCase().trim().equals("--end--")) {
+                System.out.println("Received: "+line);
                 response += line;
             }
             return response;
