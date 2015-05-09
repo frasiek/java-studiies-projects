@@ -10,10 +10,28 @@ import java.io.IOException;
  */
 public class Pakowacz {
 
-    /**
-     * @param args the command line arguments
-     */
-    @SuppressWarnings("empty-statement")
+//    /**
+//     * @param args the command line arguments
+//     */
+//    @SuppressWarnings("empty-statement")
+//    public static void main(String[] args) {
+//        if(args.length != 1){
+//            System.out.println("Podaj 1 parametr z plikiem do spakowania.");
+//            System.exit(1);
+//        }
+//        try {
+//            Reader reader = new Reader(args[0]);
+//            Compressor compressor = new Compressor(reader.getList());
+//            compressor.compress();
+//        } catch (FileNotFoundException e){
+//            System.out.println("Nie znaleziono pliku "+e.getMessage());
+//        } catch (IOException e){
+//            System.out.println("Blad I/O "+e.getMessage());
+//        } catch (Exception e){
+//            throw e;
+////            System.out.println("Nieznany blad "+e.getMessage());
+//        }
+//    }
     public static void main(String[] args) {
         if(args.length != 1){
             System.out.println("Podaj 1 parametr z plikiem do spakowania.");
@@ -21,8 +39,8 @@ public class Pakowacz {
         }
         try {
             Reader reader = new Reader(args[0]);
-            Compressor compressor = new Compressor(reader.getList());
-            compressor.compress();
+            Analizer analizer = new Analizer(reader.getList());
+            analizer.analize();
         } catch (FileNotFoundException e){
             System.out.println("Nie znaleziono pliku "+e.getMessage());
         } catch (IOException e){

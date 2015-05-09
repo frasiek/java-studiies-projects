@@ -36,7 +36,7 @@ public class Client {
     private Socket socket = null;
     private BufferedReader reader;
     private BufferedWriter writer;
-    private final static String host = "localhost";
+    private final static String host = "10.18.3.153";
     private final static String hostLocal = "localhost";
     private final static Integer port = 8080;
     private final static Integer portLocal = 8082;

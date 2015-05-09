@@ -18,6 +18,13 @@ public class Element {
     
     private Integer latDiff;
     private Integer lngDiff;
+    
+    private int type;
+    
+    private static int FIRST_UP = 0;
+    private static int FIRST_DOWN = 1;
+    private static int SECOND_UP = 2;
+    private static int SECOND_DOWN = 3;
 
     public Element(Integer index, String line) {
         String[] tmp = line.split(",");
@@ -49,6 +56,23 @@ public class Element {
         return lngDiff;
     }
     
-    
+    public int countDifference(Element prev){
+        this.subLat(prev.getLat());
+        this.subLng(prev.getLng());
+        
+        if(latDiff > 0){
+            type = FIRST_UP;
+        }
+        if(latDiff < 0){
+            type = FIRST_DOWN;
+        }
+        if(lngDiff > 0){
+            type = SECOND_UP;
+        }
+        if(lngDiff < 0){
+            type = SECOND_DOWN;
+        }
+        return type;
+    }
 
 }

@@ -1,0 +1,350 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package patternfinder;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+/**
+ *
+ * @author frasiek
+ */
+public class Worker extends Thread {
+
+    public void run() {
+        while (true) {
+            Long seed = PatternFinder.getSeed();
+            Random generator = new Random(seed);
+            int[] rand = new int[299];
+            int[] map = new int[4];
+            for(int i = 0; i < 299; i++){
+                rand[i] = Math.abs(generator.nextInt()%4);
+            }
+            map[rand[0]] = 0;
+            map[rand[1]] = 1;
+            map[rand[2]] = 3;
+            map[rand[3]] = 2;
+            boolean ok = true;
+            
+            for(int i = 4; i <14; i++){
+                if(list.get(i) != map[rand[i]]){
+                    ok = false;
+                    break;
+                }
+            }
+            
+            if(ok){
+                System.out.println("OK!!!! "+seed.toString());
+            }
+        }
+    }
+    
+    private ArrayList<Integer> list = new ArrayList<>();
+    
+    public Worker(){
+        list.add(0);
+        list.add(1);
+        list.add(3);
+        list.add(2);
+        list.add(0);
+        list.add(2);
+        list.add(3);
+        list.add(3);
+        list.add(3);
+        list.add(2);
+        list.add(0);
+        list.add(0);
+        list.add(0);
+        list.add(1);
+        list.add(0);
+        list.add(1);
+        list.add(1);
+        list.add(3);
+        list.add(1);
+        list.add(2);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(0);
+        list.add(2);
+        list.add(3);
+        list.add(0);
+        list.add(2);
+        list.add(3);
+        list.add(1);
+        list.add(1);
+        list.add(3);
+        list.add(1);
+        list.add(3);
+        list.add(0);
+        list.add(2);
+        list.add(1);
+        list.add(1);
+        list.add(1);
+        list.add(3);
+        list.add(1);
+        list.add(1);
+        list.add(3);
+        list.add(0);
+        list.add(0);
+        list.add(2);
+        list.add(0);
+        list.add(1);
+        list.add(0);
+        list.add(2);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(0);
+        list.add(0);
+        list.add(1);
+        list.add(1);
+        list.add(0);
+        list.add(0);
+        list.add(3);
+        list.add(2);
+        list.add(1);
+        list.add(3);
+        list.add(3);
+        list.add(2);
+        list.add(3);
+        list.add(2);
+        list.add(3);
+        list.add(2);
+        list.add(2);
+        list.add(3);
+        list.add(0);
+        list.add(3);
+        list.add(0);
+        list.add(3);
+        list.add(3);
+        list.add(3);
+        list.add(0);
+        list.add(0);
+        list.add(2);
+        list.add(0);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(2);
+        list.add(2);
+        list.add(3);
+        list.add(2);
+        list.add(1);
+        list.add(2);
+        list.add(2);
+        list.add(1);
+        list.add(3);
+        list.add(1);
+        list.add(0);
+        list.add(3);
+        list.add(3);
+        list.add(3);
+        list.add(0);
+        list.add(0);
+        list.add(0);
+        list.add(1);
+        list.add(1);
+        list.add(3);
+        list.add(2);
+        list.add(3);
+        list.add(0);
+        list.add(3);
+        list.add(0);
+        list.add(3);
+        list.add(0);
+        list.add(0);
+        list.add(2);
+        list.add(2);
+        list.add(3);
+        list.add(0);
+        list.add(0);
+        list.add(0);
+        list.add(0);
+        list.add(2);
+        list.add(3);
+        list.add(3);
+        list.add(0);
+        list.add(2);
+        list.add(1);
+        list.add(1);
+        list.add(1);
+        list.add(3);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(3);
+        list.add(0);
+        list.add(2);
+        list.add(3);
+        list.add(3);
+        list.add(1);
+        list.add(1);
+        list.add(1);
+        list.add(0);
+        list.add(0);
+        list.add(1);
+        list.add(0);
+        list.add(1);
+        list.add(0);
+        list.add(0);
+        list.add(0);
+        list.add(3);
+        list.add(0);
+        list.add(2);
+        list.add(3);
+        list.add(3);
+        list.add(3);
+        list.add(3);
+        list.add(0);
+        list.add(2);
+        list.add(2);
+        list.add(1);
+        list.add(3);
+        list.add(1);
+        list.add(3);
+        list.add(1);
+        list.add(2);
+        list.add(0);
+        list.add(2);
+        list.add(1);
+        list.add(1);
+        list.add(0);
+        list.add(3);
+        list.add(3);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(2);
+        list.add(2);
+        list.add(0);
+        list.add(2);
+        list.add(1);
+        list.add(2);
+        list.add(2);
+        list.add(0);
+        list.add(3);
+        list.add(0);
+        list.add(1);
+        list.add(3);
+        list.add(3);
+        list.add(2);
+        list.add(2);
+        list.add(1);
+        list.add(1);
+        list.add(2);
+        list.add(0);
+        list.add(2);
+        list.add(1);
+        list.add(1);
+        list.add(0);
+        list.add(3);
+        list.add(0);
+        list.add(0);
+        list.add(3);
+        list.add(0);
+        list.add(2);
+        list.add(1);
+        list.add(1);
+        list.add(2);
+        list.add(0);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(1);
+        list.add(2);
+        list.add(2);
+        list.add(2);
+        list.add(0);
+        list.add(0);
+        list.add(3);
+        list.add(1);
+        list.add(0);
+        list.add(0);
+        list.add(1);
+        list.add(1);
+        list.add(1);
+        list.add(3);
+        list.add(1);
+        list.add(2);
+        list.add(2);
+        list.add(3);
+        list.add(3);
+        list.add(2);
+        list.add(2);
+        list.add(3);
+        list.add(0);
+        list.add(0);
+        list.add(3);
+        list.add(0);
+        list.add(0);
+        list.add(2);
+        list.add(3);
+        list.add(3);
+        list.add(2);
+        list.add(3);
+        list.add(1);
+        list.add(3);
+        list.add(0);
+        list.add(3);
+        list.add(1);
+        list.add(1);
+        list.add(2);
+        list.add(2);
+        list.add(1);
+        list.add(3);
+        list.add(3);
+        list.add(2);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(3);
+        list.add(3);
+        list.add(1);
+        list.add(0);
+        list.add(0);
+        list.add(3);
+        list.add(2);
+        list.add(2);
+        list.add(0);
+        list.add(3);
+        list.add(3);
+        list.add(1);
+        list.add(0);
+        list.add(1);
+        list.add(0);
+        list.add(2);
+        list.add(2);
+        list.add(0);
+        list.add(1);
+        list.add(2);
+        list.add(2);
+        list.add(3);
+        list.add(1);
+        list.add(0);
+        list.add(0);
+        list.add(2);
+        list.add(0);
+        list.add(0);
+        list.add(1);
+        list.add(1);
+        list.add(3);
+        list.add(0);
+        list.add(3);
+        list.add(0);
+        list.add(2);
+        list.add(3);
+        list.add(0);
+        list.add(0);
+        list.add(2);
+        list.add(2);
+        list.add(0);
+        list.add(3);
+        list.add(0);
+
+    }
+
+}
